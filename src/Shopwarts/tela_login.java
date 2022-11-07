@@ -2,12 +2,8 @@
 package Shopwarts;
 
 import javax.swing.JOptionPane;
-import database.MySQL;
-
 
 public class tela_login extends javax.swing.JFrame {
-    
-    MySQL conectar = new MySQL(); //acessar os métodos de conexao com o banco
     
     Aluno login = new Aluno();
     
@@ -16,46 +12,22 @@ public class tela_login extends javax.swing.JFrame {
     }    
     
     private void Login(Aluno login){
-        this.conectar.conectaBanco();
-
-        String consultaUsername = this.user.getText();
-        try {
-            this.conectar.executarSQL(
-                   "SELECT "
-                    + "user_name,"
-                    + "user_password"
-                 + " FROM"
-                     + " users"
-                 + " WHERE"
-                     + " user_name = '" + consultaUsername + "'"
-                + ";"
-            );
-
-            while(this.conectar.getResultSet().next()){
-                login.setUsername(this.conectar.getResultSet().getString(1));
-                login.setUserpassword(this.conectar.getResultSet().getString(2));
-           }
-
-        } catch (Exception e) {
-            System.out.println("Erro ao consultar cliente " +  e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao buscar cliente");
-
-        }finally{
-            this.conectar.fechaBanco();
-            
-            if(this.password.getText().equals(login.getUserpassword()) 
-            && this.user.getText().equals(login.getUsername())) {
-                JOptionPane.showMessageDialog(null, "Login efetuado com sucesso."); 
-
-                escolherTela escolhertela = new escolherTela();
-                escolhertela.setUser(login.getUsername());                 
-                escolhertela.setVisible(true);
-                dispose();
-
-       }else{
-           JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorreto(s).");
-            }
-        }
+        login.setUsername(this.user.getText());
+        login.setBirthday("15-07-2000");
+        login.setCity("Sorocaba");
+        login.setDistrict("Vila Hortência");
+        login.setGringgots("300");
+        login.setHouse("Sonserina");
+        login.setNome("Ettore Alessandro Rollo");
+        login.setRb("210741");
+        login.setStreet("Quinzinho de Barros");
+        login.setStreetN("71");
+        login.setUserpassword(this.password.getText());
+        JOptionPane.showMessageDialog(null, "Login efetuado com sucesso."); 
+        escolherTela escolhertela = new escolherTela();
+        escolhertela.setUser(login.getUsername());                 
+        escolhertela.setVisible(true);
+        dispose();
     }
 
     @SuppressWarnings("unchecked")
